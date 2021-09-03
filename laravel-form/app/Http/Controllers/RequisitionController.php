@@ -14,7 +14,7 @@ class RequisitionController extends Controller
     public function index()
 
     {   
-        $user_id = Auth::id();
+        $user_id = auth()->user()->id;
         $requisition = Requisition::where('user_id', $user_id);
         return view('requests.index');
     }
