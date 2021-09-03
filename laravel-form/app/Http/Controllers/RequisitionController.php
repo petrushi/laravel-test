@@ -26,7 +26,7 @@ class RequisitionController extends Controller
      */
     public function create()
     {
-        //
+        return view('requests.create');
     }
 
     /**
@@ -37,7 +37,30 @@ class RequisitionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'phone' => 'required',
+            'company' => 'required',
+            'description' => 'required',
+            'file' => 'required'
+        ]);
+
+        $newFileName = uniqid() . '-' . $request->title . '.' . $request->file->extension();
+
+        $request->file->move(public_path('files'), $newFileName);
+
+        Post::create([
+            'title' => $request->input('title'),
+            'phone' => $request->input('phone'),
+            'company' => $request->input('company'),
+            'requesttitle' => $request->input('requesttitle'),
+            'message' => $request->input('message'),
+            'file_path' => $newFileName,
+            'user_id' => auth()->user()->id
+        ]);
+
+        return redirect('/blog')
+            ->with('message', 'Your post has been added!');
     }
 
     /**
