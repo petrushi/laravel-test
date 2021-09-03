@@ -21,6 +21,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Предыдущие заявки') }}</div>
                     <div class="card-body">
+                        <p>{{$user_id}}</p>
                         @foreach ($requisition ?? [] as $req)
                             <span>{{ $req->title }}</span>
                             <span>{{ $req->company }}</span>
@@ -32,7 +33,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
